@@ -78,9 +78,10 @@ def launch_setup(context, *args, **kwargs):
 
     bag_processes = []
     for i in range(max_nb_robots):
-        bag_file = os.path.join(
-                get_package_share_directory("cslam_experiments"), "data",
-                dataset, "Graco-" + str(i))
+        # bag_file = os.path.join(
+        #         get_package_share_directory("cslam_experiments"), "data",
+        #         dataset, "Graco-" + str(i))
+        bag_file = "/home/miscellaneous/bagfiles/Graco_Ground/Graco-" + str(i) + ".db3"
         bag_proc = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(
@@ -139,7 +140,7 @@ def launch_setup(context, *args, **kwargs):
 def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument('max_nb_robots', default_value='3'),
+        DeclareLaunchArgument('max_nb_robots', default_value='2'),
         DeclareLaunchArgument('sequence', default_value='Ground'),
         DeclareLaunchArgument('robot_delay_s', default_value='400', description="Delay between launching each robot. Ajust depending on the computing power of your machine."),
         DeclareLaunchArgument('launch_delay_s', default_value='10', description="Delay between launching the bag and the robot. In order to let the robot initialize properly and not loose the first bag data frames."),
