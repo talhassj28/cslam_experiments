@@ -78,11 +78,11 @@ def launch_setup(context, *args, **kwargs):
 
     bag_processes = []
     for i in range(max_nb_robots):
-        # bag_file = os.path.join(
-        #         get_package_share_directory("cslam_experiments"), "data",
-        #         dataset, "Graco-" + str(i))
+        bag_file = os.path.join(
+                get_package_share_directory("cslam_experiments"), "data",
+                dataset, "Graco-" + str(i))
         # Modify Path
-        bag_file = "/home/miscellaneous/bagfiles/Graco_Ground_Shorts/Graco-" + str(i) + ".db3"
+        # bag_file = "/home/miscellaneous/bagfiles/Graco_Ground/ground-0" + str(i+1) + "_0.db3"
         bag_proc = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(
