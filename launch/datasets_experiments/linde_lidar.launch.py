@@ -52,7 +52,7 @@ def launch_setup(context, *args, **kwargs):
         odom_proc = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory('cslam_experiments'), 'launch',
-                             'odometry', 'rtabmap_s3e_lidar_odometry.launch.py')),
+                             'odometry', 'rtabmap_s3e_linde_lidar_odometry.launch.py')),
             launch_arguments={
                 'log_level': "info",
                 "namespace": "/r" + str(i),
@@ -107,22 +107,32 @@ def launch_setup(context, *args, **kwargs):
                         actions=[bag_processes[i]]))
         schedule.append(PopLaunchConfigurations())
 
+    # tf_process = Node(package="tf2_ros",
+    #                   executable="static_transform_publisher",
+    #                   arguments="0 0 0 0 0 0 velodyne base_link".split(" "),
+    #                   parameters=[])
+    # tf_process_imu = Node(package="tf2_ros",
+    #                   executable="static_transform_publisher",
+    #                   arguments="-0.01192 -0.0197 0.1226 0 0 0 velodyne gnss".split(" "),
+    #                   parameters=[])
+    # # Wie ich das verstehe: es wird angegeben wo sich base_link (Fahzeug-KS) in Bezug auf velodyne befindet
+    # # und wo sich gnss in Bezug auf velodyne befindet
     tf_process = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="0 0 0 0 0 0 velodyne base_link".split(" "),
+                      arguments="0 0 0 0 0 0 forklift base_link".split(" "),
                       parameters=[])
     tf_process_imu = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="-0.01192 -0.0197 0.1226 0 0 0 velodyne gnss".split(" "),
+                      arguments="-0.01192 -0.0197 0.1226 0 0 0 forklift imu_link".split(" "),
                       parameters=[])
-    tf_process_cam0 = Node(package="tf2_ros",
-                      executable="static_transform_publisher",
-                      arguments="0 0 0 0 0 0 camera_21239776 base_link".split(" "),
-                      parameters=[])
-    tf_process_cam1 = Node(package="tf2_ros",
-                      executable="static_transform_publisher",
-                      arguments="-0.23223 0 0 0 0 0 camera_21387977 camera_21239776".split(" "),
-                      parameters=[])
+    # tf_process_cam0 = Node(package="tf2_ros",
+    #                   executable="static_transform_publisher",
+    #                   arguments="0 0 0 0 0 0 camera_21239776 base_link".split(" "),
+    #                   parameters=[])
+    # tf_process_cam1 = Node(package="tf2_ros",
+    #                   executable="static_transform_publisher",
+    #                   arguments="-0.23223 0 0 0 0 0 camera_21387977 camera_21239776".split(" "),
+    #                   parameters=[])
     schedule.append(PushLaunchConfigurations())
     schedule.append(tf_process)
     schedule.append(PopLaunchConfigurations())
