@@ -82,14 +82,14 @@ def launch_setup(context, *args, **kwargs):
                         # '/velodyne/points:=' +
                         '/fp6/perception/fused_pointcloud:=' +
                         LaunchConfiguration('namespace').perform(context) +
-                        '/pointcloud',
+                        '/pointcloud_raw',
                         # '/gnss/gps:=' +
                         # LaunchConfiguration('namespace').perform(context) +
                         # '/gps/fix',
                         # '/gnss/imu:=' +
                         '/genesys/fp6/localization/adma/imu:=' +
                         LaunchConfiguration('namespace').perform(context) +
-                        '/imu/data',
+                        '/imu/data_raw',
                     ],
                     name='bag',
                     output='screen',
