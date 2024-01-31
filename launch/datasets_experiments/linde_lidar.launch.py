@@ -100,12 +100,31 @@ def launch_setup(context, *args, **kwargs):
             )
         bag_processes.append(bag_proc)
 
+    # Creating processes for synching imu and lidar with clock
+    imu_lidar_synch_processes = []
+    for i in range(max_nb_robots):
+        namespace = "/r" + str(i)
+        imu_lidar_synch_proc = Node(package = "imu_lidar_syncher",
+                                   executable = "imu_lidar_clock_syncher",
+                                   name = f'r{i}_imu_lidar_clock_syncher',
+                                   parameters = [{'imu_topic_old': namespace + '/imu/data_raw'},
+                                                 {'lidar_topic_old': namespace + '/pointcloud_raw'},
+                                                 {'imu_topic_new': namespace + '/imu/data'},
+                                                 {'lidar_topic_new': namespace + '/pointcloud'}])
+        imu_lidar_synch_processes.append(imu_lidar_synch_proc)
+
     for i in range(max_nb_robots):
         schedule.append(PushLaunchConfigurations())
         schedule.append(
             TimerAction(period=float(robot_delay_s) * i + float(launch_delay_s),
                         actions=[bag_processes[i]]))
         schedule.append(PopLaunchConfigurations())
+
+        # Adding imu-lidar-synch to schedule
+        schedule.append(PushLaunchConfigurations())
+        schedule.append(imu_lidar_synch_processes[i])
+        schedule.append(PopLaunchConfigurations())
+
 
     # tf_process = Node(package="tf2_ros",
     #                   executable="static_transform_publisher",
