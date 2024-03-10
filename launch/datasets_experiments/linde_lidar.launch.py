@@ -138,11 +138,11 @@ def launch_setup(context, *args, **kwargs):
     # # und wo sich gnss in Bezug auf velodyne befindet
     tf_process = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="0 0 0 0 0 0 forklift base_link".split(" "),
+                      arguments="0 0 0 0 0 0 ouster_fused base_link".split(" "),
                       parameters=[])
     tf_process_imu = Node(package="tf2_ros",
                       executable="static_transform_publisher",
-                      arguments="-0.01192 -0.0197 0.1226 0 0 0 forklift imu_link".split(" "),
+                      arguments="0.0006 -0.041 1.004 0 0 0 ouster_fused imu_link".split(" "), # von fnp (=ouster_fused) zu adma: x,y,z = 0.0006,-0.041,1.004
                       parameters=[])
     # tf_process_cam0 = Node(package="tf2_ros",
     #                   executable="static_transform_publisher",

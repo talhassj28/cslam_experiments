@@ -84,6 +84,7 @@ def launch_setup(context, *args, **kwargs):
                 "guess_min_translation": LaunchConfiguration('odom_guess_min_translation'),
                 "guess_min_rotation": LaunchConfiguration('odom_guess_min_rotation'),
                 "Icp/MaxTranslation": "5",
+                "Icp/MaxRotation": "1", # Talha
                 "queue_size_odom": "100",
                 #"ground_normals_up": "true",
                 "Icp/VoxelSize": "0.4",
@@ -130,7 +131,7 @@ def generate_launch_description():
         DeclareLaunchArgument('gui_cfg',  default_value='~/.ros/rtabmap_gui.ini',  description='Configuration path of rtabmapviz.'),
         DeclareLaunchArgument('rviz_cfg', default_value=config_rviz,               description='Configuration path of rviz2.'),
 
-        DeclareLaunchArgument('frame_id',       default_value='forklift',          description='Fixed frame id of the robot (base frame), you may set "base_link" or "base_footprint" if they are published. For camera-only config, this could be "camera_link".'),
+        DeclareLaunchArgument('frame_id',       default_value='ouster_fused',          description='Fixed frame id of the robot (base frame), you may set "base_link" or "base_footprint" if they are published. For camera-only config, this could be "camera_link".'),
         DeclareLaunchArgument('odom_frame_id',  default_value='',                   description='If set, TF is used to get odometry instead of the topic.'),
         DeclareLaunchArgument('map_frame_id',   default_value='map',                description='Output map frame id (TF).'),
         DeclareLaunchArgument('publish_tf_map', default_value='true',               description='Publish TF between map and odomerty.'),
